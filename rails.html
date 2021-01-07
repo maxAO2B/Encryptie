@@ -1,0 +1,41 @@
+
+
+
+
+<script type="text/javascript">
+function Encrypt() {
+    plaintext = document.getElementById("p").value.toLowerCase().replace(/[^a-z]/g, "");  
+    if(plaintext.length < 1){ 
+        alert("please enter some plaintext"); 
+            return; 
+    }    
+    var key = document.getElementById("key").value.toLowerCase().replace(/[^a-z]/g, "");  
+    var pc = document.getElementById("pc").value.toLowerCase().replace(/[^a-z]/g, "");
+    if(pc=="") pc = "x";    
+    while(plaintext.length % key.length != 0) 
+        plaintext += pc.charAt(0);    
+    var colLength = plaintext.length / key.length;
+    var chars = "abcdefghijklmnopqrstuvwxyz"; 
+    ciphertext = ""; 
+    k=0;
+    for(i=0; i < key.length; i++){
+        while(k<26){
+            t = key.indexOf(chars.charAt(k));
+            arrkw = key.split(""); arrkw[t] = "_"; key = arrkw.join("");
+            if(t >= 0) break;
+            else k++;
+        }
+        for(j=0; j < colLength; j++) ciphertext += plaintext.charAt(j*key.length + t);
+    }
+    document.getElementById("c").value = ciphertext;
+}
+
+</script>
+
+<textarea id="p" name="p" rows="4" cols="50">attack at dawn</textarea>
+<p>keyword = 
+    <input id="key" name="key" size="10" value="zebra" type="text"> 
+   pad character = 
+   <input id="pc" name="pc" size="1" value="x" type="text"></p>
+<p><input name="btnEn" value="Encrypt" onclick="Encrypt()" type="button"> 
+<p>Ciphertext<br><textarea id="c" name="c" rows="4" cols="50"></textarea> </p>
